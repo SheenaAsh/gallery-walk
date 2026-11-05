@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery Walk Presentation — By Angel Sheena Cameron Ash</title>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        darkCanvas: '#141210',
+                        darkCard: '#1e1a17',
+                        espressoBorder: '#38302b',
+                        parchment: '#f7f2ea',
+                        parchmentDark: '#ede5d8',
+                        warmGold: '#d97706',
+                        brightGold: '#f59e0b',
+                        terracotta: '#9f1239',
+                        crimsonSoft: '#be123c',
+                        forestGreen: '#15803d',
+                        slateText: '#a8a29e'
+                    },
+                    fontFamily: {
+                        sans: ['Trebuchet MS', 'Segoe UI', 'sans-serif'],
+                        handwriting: ['Georgia', 'serif'],
+                        display: ['Georgia', 'serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Leaflet.js Interactive Map CSS & JS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+
+    <style>
+        body {
+            font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+            background-color: #141210;
+            background-image: radial-gradient(#2b241f 1px, transparent 1px);
+            background-size: 24px 24px;
+            color: #f7f2ea;
+        }
+
+        .font-handwriting { font-family: Georgia, serif; }
+        .font-display { font-family: Georgia, serif; }
+
+        /* Dark Formal Card Styling */
+        .formal-card {
+            background-color: #1e1a17;
+            border: 1px solid #38302b;
+            box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(217, 119, 6, 0.1);
+        }
+
+        .parchment-box {
+            background-color: #f7f2ea;
+            color: #1c1917;
+            border: 1px solid #d6cebf;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.04);
+        }
+
+        /* Polaroid Photo Frame Styling & HD Crisp Image Rules */
+        .photo-frame {
+            background-color: #fcf9f4;
+            padding: 10px 10px 18px 10px;
+            border: 1px solid #d6cebf;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .photo-frame:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 28px rgba(217, 119, 6, 0.25);
+        }
+
+        /* Crisp HD Local Image Rendering */
+        .photo-frame img, .metric-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            image-rendering: -webkit-optimize-contrast;
+            image-rendering: crisp-edges;
+        }
+
+        /* Leaflet Map Dark Theme Styling */
+        #leaflet-map {
+            height: 440px;
+            width: 100%;
+            border-radius: 12px;
+            z-index: 10;
+        }
+        .leaflet-popup-content-wrapper {
+            background: #1e1a17 !important;
+            color: #f7f2ea !important;
+            border: 1px solid #d97706 !important;
+            border-radius: 8px !important;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5) !important;
+        }
+        .leaflet-popup-tip {
+            background: #1e1a17 !important;
+        }
+
+        /* BRIGHT BLUE REFRESH — retains the layout and structure of the original site */
+        body { background:#eef2f7; background-image:none; color:#243950; line-height:1.7; letter-spacing:.005em; }
+        .formal-card { background:#fbfcfe; border:1px solid #cbd7e6; box-shadow:0 5px 18px rgba(24,64,121,.08); }
+        .parchment-box { background:#fffefa; color:#26394e; border:1px solid #d9e4f1; box-shadow:none; }
+        .photo-frame { box-shadow:0 4px 14px rgba(26,65,119,.12); }
+        .photo-frame:hover { box-shadow:0 7px 20px rgba(26,65,119,.18); }
+        .photo-frame img,.metric-image { image-rendering:auto; }
+        .font-handwriting { font-style:italic; }
+        header { background:#fff !important; border-color:#c7d9f1 !important; }
+        footer { background:#eaf3ff !important; border-color:#c7d9f1 !important; }
+        .bg-stone-950,.bg-stone-900\/90 { background-color:#e8eff7 !important; }
+        .text-stone-400,.text-stone-300,.text-stone-200,.text-stone-500 { color:#52677f !important; }
+        .text-amber-100,.text-amber-200,.text-amber-300,.text-amber-400,.text-amber-500,
+        .text-amber-950,.text-amber-900,.text-amber-800,.text-emerald-200,.text-emerald-500 { color:#1554a1 !important; }
+        .bg-amber-600,.bg-amber-500 { background-color:#2368bf !important; color:white !important; }
+        .bg-amber-900\/40,.bg-amber-950\/40,.bg-amber-950\/60,.bg-amber-900\/10,
+        .bg-amber-600\/20,.bg-stone-900 { background-color:#e3edf8 !important; }
+        .border-amber-900\/40,.border-amber-900\/20,.border-amber-700\/40,.border-amber-800\/50,
+        .border-amber-600\/50,.border-amber-500\/40 { border-color:#b7d2f1 !important; }
+        .border-l-4.border-amber-600,.border-l-4.border-emerald-600 { border-left-color:#2469bc !important; }
+        .bg-gradient-to-r { background-image:none !important; -webkit-text-fill-color:#2469bc !important; color:#2469bc !important; }
+        .text-stone-900 { color:#26394e !important; }
+        .bg-amber-100 { background:#e5f1ff !important; }
+        .bg-stone-900\/90 { background:#f1f7ff !important; }
+        .leaflet-popup-content-wrapper,.leaflet-popup-tip { background:#fff !important;color:#173b68 !important;border-color:#b7d2f1 !important;box-shadow:0 3px 12px rgba(0,0,0,.1) !important; }
+        .leaflet-popup-content p {color:#173b68 !important;}
+        #solutions-section .solution-card { background:#1358a8; color:white; border:1px solid #0c478c; padding:24px; border-radius:14px; box-shadow:0 8px 22px rgba(12,71,140,.17); }
+        #solutions-section .solution-card h4,#solutions-section .solution-card p,#solutions-section .solution-card strong { color:white !important; }
+        #solutions-section .solution-card .step { color:#0c478c; background:#fff; border-radius:100px; display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;font-weight:bold; }
+        #solutions-section .solution-card a { color:#fff; font-weight:bold; text-decoration:underline; text-underline-offset:4px; }
+        #solutions-section .solution-card a:hover { color:#d9edff; }
+        .timeline-grid { display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px; }
+        .timeline-entry { background:#fff; border:1px solid #c7d9f1;border-left:5px solid #2469bc;border-radius:10px;padding:17px; }
+        .timeline-entry time { display:block;color:#1554a1;font-weight:800;margin-bottom:5px; }
+        .timeline-entry p {margin:0;color:#40546c;line-height:1.6;font-size:.93rem;}
+        .resource-link {display:block;background:#e8f2ff;border:1px solid #b7d2f1;border-radius:10px;padding:15px;color:#1554a1;font-weight:bold;text-decoration:none;}
+        .resource-link:hover {background:#d7eaff;text-decoration:underline;}
+        .note {background:#eaf3ff;border-left:4px solid #2368bf;padding:14px 18px;border-radius:6px;color:#34506d;font-size:.9rem;}
+        @media(max-width:650px){.timeline-grid{grid-template-columns:1fr}#leaflet-map{height:340px}}
+    
+
+        /* Final small refinements: softer blue, more readable type, consistent map cards */
+        body { font-size: 16px; }
+        p, li { line-height: 1.72; }
+        h1, h2, h3, h4 { letter-spacing: -.015em; }
+        .font-display { font-family: Georgia, "Times New Roman", serif; }
+        .font-handwriting { font-family: Georgia, "Times New Roman", serif; }
+        .map-action-controls button {
+            background:#dce8f5 !important;
+            color:#234e7e !important;
+            border:1px solid #b7cbe0 !important;
+            box-shadow:none;
+            font-family:"Trebuchet MS", "Segoe UI", sans-serif;
+        }
+        .map-action-controls button:hover { background:#cbdff1 !important; }
+        .map-info-card {
+            background:#e7eef7;
+            border:1px solid #c6d6e7;
+            color:#344c64;
+            box-shadow:0 2px 6px rgba(36,67,103,.04);
+            line-height:1.6;
+        }
+        .map-info-title { color:#245b98; font-size:.95rem; }
+        #solutions-section .solution-card { background:#205b9b; border-color:#184a7f; }
+        .resource-link { background:#e0ebf7; }
+        .resource-link:hover { background:#d1e2f3; }
+
+    </style>
+</head>
+<body class="min-h-screen antialiased selection:bg-amber-600 selection:text-white">
+
+    <!-- NAVIGATION / HEADER BAR -->
+    <header class="sticky top-0 z-50 bg-[#141210]/95 backdrop-blur-md border-b border-amber-900/40 px-4 py-3 sm:px-8">
+        <div class="max-w-6xl mx-auto flex flex-wrap items-center justify-between gap-3">
+            
+            <div class="flex items-center gap-3">
+                <span class="px-3 py-1 bg-amber-900/40 border border-amber-600/50 text-amber-300 font-display font-bold text-xs uppercase tracking-widest rounded-md">
+                    Gallery Walk Presentation
+                </span>
+                <span class="font-handwriting text-2xl text-amber-200 font-bold">
+                    By Angel Sheena Cameron Ash
+                </span>
+            </div>
+
+            <!-- Quick Jump Nav Links -->
+            <nav class="hidden md:flex items-center gap-5 text-xs font-bold font-display uppercase tracking-wider text-stone-400">
+                <a href="#family-narrative" class="hover:text-amber-400 transition">Grandma Irma's Story</a>
+                <a href="#timeline" class="hover:text-amber-400 transition">Timeline</a>
+                <a href="#metrics-section" class="hover:text-amber-400 transition">Metrics & Data</a>
+                <a href="#map-section" class="hover:text-amber-400 transition">Interactive Map</a>
+                <a href="#solutions-section" class="text-amber-400 hover:text-amber-300 transition">Solutions & Action</a>
+            </nav>
+
+            <button onclick="openQRModal()" class="flex items-center gap-2 bg-amber-600 hover:bg-amber-500 text-stone-950 font-display font-bold px-3.5 py-1.5 rounded-lg text-xs uppercase tracking-wider transition">
+                <i class="fa-solid fa-qrcode"></i>
+                <span>Classroom QR</span>
+            </button>
+
+        </div>
+    </header>
+
+    <!-- MAIN WRAPPER -->
+    <main class="max-w-6xl mx-auto px-4 py-8 sm:px-6 lg:px-8 space-y-12">
+
+        <!-- TITLE / HERO CARD -->
+        <section class="formal-card rounded-2xl p-6 sm:p-12 relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-96 h-96 bg-amber-900/10 rounded-full blur-3xl pointer-events-none"></div>
+
+            <div class="max-w-4xl space-y-6 relative z-10">
+                <div class="inline-flex items-center gap-2 px-3 py-1 bg-amber-950/60 border border-amber-700/40 rounded-full text-amber-400 text-xs font-semibold">
+                    <i class="fa-solid fa-scale-balanced text-amber-500"></i>
+                    A Family Story & Community Research
+                </div>
+
+                <h1 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold font-display leading-tight text-amber-100">
+                    My Grandma Irma’s Story: <br>
+                    <span class="bg-gradient-to-r from-amber-400 via-amber-200 to-amber-500 bg-clip-text text-transparent">
+                        Family, Birmingham & Environmental Justice
+                    </span>
+                </h1>
+
+                <p class="text-base sm:text-lg text-stone-300 leading-relaxed font-normal">
+                    My grandmother was so much more than what happened to her. I want to share who she was, what her neighborhood was like, and why protecting communities from pollution still matters.
+                </p>
+
+                <div class="p-4 bg-stone-900/90 rounded-xl border border-stone-800 flex flex-wrap items-center justify-between gap-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-amber-600/20 border border-amber-500/40 flex items-center justify-center font-bold text-amber-400">
+                            <i class="fa-solid fa-feather-pointed"></i>
+                        </div>
+                        <div>
+                            <p class="text-[10px] font-bold uppercase tracking-wider text-stone-400 font-display">Researcher & Presenter</p>
+                            <p class="text-sm font-bold text-amber-200 font-display">Angel Sheena Cameron Ash</p>
+                        </div>
+                    </div>
+                    <div class="text-xs font-mono text-stone-400">
+                        <span class="inline-block bg-amber-950/60 px-3 py-1.5 rounded-md border border-amber-800/60 font-semibold text-amber-300">
+                            Focal Location: 2637 39th Avenue North, Birmingham, AL
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 1: GRANDMA IRMA & FAMILY NARRATIVE -->
+        <section id="family-narrative" class="scroll-mt-24 space-y-8">
+            
+            <div class="border-l-4 border-amber-600 pl-4 py-1">
+                <span class="text-xs font-bold uppercase font-display tracking-widest text-amber-500">Section 01 // Living Legacy</span>
+                <h2 class="text-2xl sm:text-4xl font-extrabold font-display text-amber-100 mt-0.5">
+                    My Grandma Irma & Our Family Story
+                </h2>
+                <p class="font-handwriting text-xl sm:text-2xl text-amber-300 font-medium">
+                    "She loved blue, her family, her faith, and making people feel cared for."
+                </p>
+            </div>
+
+            <!-- SCRAPBOOK PHOTO GALLERY (LOCAL IMAGE FILES) -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                
+                <!-- Photo Card 1 -->
+                <div class="photo-frame rounded-lg flex flex-col justify-between space-y-3">
+                    <div class="aspect-[4/3] bg-stone-900 rounded overflow-hidden border border-stone-300">
+                        <img src="mom_grandma_and_i.png" alt="Grandma Irma, my mom, and toddler " class="w-full h-full object-cover">
+                    </div>
+                    <p class="font-handwriting text-lg text-center text-stone-900 font-bold leading-tight">
+                        Grandma Irma, my mom, and me as a baby!
+                    </p>
+                </div>
+
+                <!-- Photo Card 2 -->
+                <div class="photo-frame rounded-lg flex flex-col justify-between space-y-3">
+                    <div class="aspect-[4/3] bg-stone-900 rounded overflow-hidden border border-stone-300">
+                        <img src="mom_and_grandma.png" alt="Grandma & Mom smiling together" class="w-full h-full object-cover">
+                    </div>
+                    <p class="font-handwriting text-lg text-center text-stone-900 font-bold leading-tight">
+                        Grandma and mom smiling together in her childhood home, the kitchen on 2637 39th Avenue North
+                    </p>
+                </div>
+
+                <!-- Photo Card 3 -->
+                <div class="photo-frame rounded-lg flex flex-col justify-between space-y-3">
+                    <div class="aspect-[4/3] bg-stone-900 rounded overflow-hidden border border-stone-300">
+                        <img src="family_car_photo.png" alt="Family trip & laughter in the car" class="w-full h-full object-cover">
+                    </div>
+                    <p class="font-handwriting text-lg text-center text-stone-900 font-bold leading-tight">
+                        Family road trips & laughing in the car
+                    </p>
+                </div>
+
+                <!-- Photo Card 4 -->
+                <div class="photo-frame rounded-lg flex flex-col justify-between space-y-3">
+                    <div class="aspect-[4/3] bg-stone-900 rounded overflow-hidden border border-stone-300">
+                        <img src="mom_poppi_grandma_and_i.png" alt="Grandma Irma, Poppi, Mom & I (as a baby)" class="w-full h-full object-cover">
+                    </div>
+                    <p class="font-handwriting text-lg text-center text-stone-900 font-bold leading-tight">
+                        Grandma, Poppi, Mom & I (as a newborn)
+                    </p>
+                </div>
+
+            </div>
+
+            <!-- PARCHMENT NARRATIVE CONTAINER (ANGEL'S VOICE & DETAILS) -->
+            <div class="parchment-box p-6 sm:p-10 rounded-2xl space-y-6 text-stone-900 text-base sm:text-lg leading-relaxed">
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pb-6 border-b border-stone-300">
+                    <div class="space-y-1">
+                        <span class="text-xs font-bold uppercase tracking-wider font-display text-amber-900">Lineage & Roots</span>
+                        <p class="text-sm text-stone-800">
+                            My Grandma Irma was born in 1940 to two sharecroppers, who were raised by enslaved (Black) and Indigenous parents. (Papa Jimmy was my great-great-grandfather's nickname. I don't know my great-great-grandmother's name.)
+                        </p>
+                    </div>
+
+                    <div class="space-y-1">
+                        <span class="text-xs font-bold uppercase tracking-wider font-display text-amber-900">Tuskegee & UAB Hospital Integration</span>
+                        <p class="text-sm text-stone-800">
+                            She moved to Birmingham with my mom around 1969 when my mom was about to start elementary school. She bought the house with her own money after graduating from Tuskegee Institute with her food science/dietitian degree and certification where she met my grandfather (Poppi), who lived with her briefly until their divorce. She worked at UAB Hospital as a dietitian throughout this entire period, retiring in her 60s—among the first to integrate the hospital's dietary staff in the late 1960s to early 70s where hospital workers in the Deep South were often still segregated.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="space-y-4">
+                    <p>
+                        I'm the only grandchild of James Ralph Cameron and Irma Jean Allen Cameron Patton (Yes, she kept her divorced husband's name). She remarried to Eddie Patton (my step-grandfather) and gave birth to my aunts and uncle over the span of 10 years.
+                    </p>
+
+                    <!-- House Location Box -->
+                    <div class="p-5 bg-amber-900/10 rounded-xl border border-amber-900/20 space-y-2 my-4">
+                        <div class="flex items-center gap-2 text-amber-950 font-display font-bold text-sm uppercase">
+                            <i class="fa-solid fa-location-dot text-amber-800"></i>
+                            <span>2637 39th Avenue North, Birmingham, AL</span>
+                        </div>
+                        <p class="text-sm text-stone-800">
+                            She lived in Birmingham pretty much all of her life at <strong>2637 39th Avenue North</strong>. Which is still standing today and owned by my aunts and uncles, and mom. There's a train track right by the house, a garbage dump, and a freeway built through the land. Plus it's a very hilly area, let alone state, so traversing the environment can get very dangerous at night, especially with limited streetlights. Schools in Birmingham are still somewhat segregated today due to redlining, industrialization and gentrification.
+                        </p>
+                    </div>
+
+                    <p>
+                        She was diagnosed with lymphoma in the 1990s. Our family has discussed concerns about environmental conditions near her home, and she was approached about compensation related to environmental harm in the early 2000s. Around 2017, after our family did more research, she was approached and compensated while receiving chemotherapy. My grandmother died June 22nd, 2022, less than a month before her 82nd birthday, from metastasized non-Hodgkin's lymphoma. She had also experienced a period of remission lasting more than ten years.
+                    </p>
+
+                    <div class="p-4 bg-amber-100 rounded-xl border-l-4 border-amber-700 font-handwriting text-2xl text-stone-900 font-bold">
+                        I miss her every day. She loved blue and was a proud member of Zeta Phi Beta Sorority, Incorporated. She was a Christian, God-fearing, patient, kind, and giving woman. She stayed integral to the church, cooking for functions, taking care of her grandchildren, and sharing her beautiful smile and laugh with us all.
+                    </div>
+
+                    <p class="text-stone-900 font-semibold italic">
+                        I'm going back to Birmingham this Christmas and I'm wondering if her story could've been any different if the government and community cared about Black people more back then, and if I could've shared my voice.
+                    </p>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- FAMILY TIMELINE: concise and easy to scan -->
+        <section id="timeline" class="scroll-mt-24 space-y-5">
+            <div class="border-l-4 border-amber-600 pl-4 py-1">
+                <span class="text-xs font-bold uppercase tracking-widest text-amber-500">Her life, in order</span>
+                <h2 class="text-2xl sm:text-4xl font-bold font-display text-amber-100">A Timeline of Grandma Irma's Life</h2>
+            </div>
+            <div class="timeline-grid">
+                <div class="timeline-entry"><time>1940</time><p>Irma was born to sharecroppers. Her family's history includes Black and Indigenous ancestors.</p></div>
+                <div class="timeline-entry"><time>1960s</time><p>She studied food science and dietetics at Tuskegee Institute and earned her professional credentials.</p></div>
+                <div class="timeline-entry"><time>Around 1969</time><p>She moved to Birmingham with my mom and made a home for her family in North Birmingham.</p></div>
+                <div class="timeline-entry"><time>Late 1960s–early 1970s</time><p>She worked at UAB Hospital as a dietitian and helped integrate its dietary staff.</p></div>
+                <div class="timeline-entry"><time>Through the years</time><p>She raised her family, worked, served her church, and brought joy to the people around her.</p></div>
+                <div class="timeline-entry"><time>1990s</time><p>She was diagnosed with lymphoma. She later experienced more than ten years of remission.</p></div>
+                <div class="timeline-entry"><time>2000s–2017</time><p>Our family learned more about environmental concerns near her home and the compensation she received.</p></div>
+                <div class="timeline-entry"><time>June 22, 2022</time><p>Grandma Irma passed away, less than a month before her 82nd birthday. I miss her every day.</p></div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: METRICS & EPA DATA EVIDENCE -->
+        <section id="metrics-section" class="scroll-mt-24 space-y-6">
+            
+            <div class="border-l-4 border-amber-600 pl-4 py-1">
+                <span class="text-xs font-bold uppercase font-display tracking-widest text-amber-500">Section 02 // Environmental Evidence</span>
+                <h2 class="text-2xl sm:text-4xl font-extrabold font-display text-amber-100 mt-0.5">
+                    Data Metrics: Industry Toxicity Spikes
+                </h2>
+                <p class="text-xs text-stone-400 font-mono mt-0.5">EPA Risk-Screening Environmental Indicators (RSEI) in Jefferson County</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                
+                <!-- Metric Card 1 -->
+                <div class="formal-card p-5 rounded-xl space-y-3">
+                    <div class="flex items-center justify-between border-b border-stone-800 pb-2">
+                        <span class="text-xs font-mono font-bold text-amber-400">EPA Facility Map (Bessemer/Birmingham)</span>
+                    </div>
+                    <div class="rounded-lg overflow-hidden border border-stone-800 bg-stone-950 aspect-[16/10]">
+                        <img src="RESI_map_bessemer.png" alt="EPA Facility Map RSEI Scores" class="metric-image">
+                    </div>
+                    <p class="text-xs text-stone-400 font-mono">
+                        Purple markers highlight dense clusters of chemical release facilities adjacent to residential neighborhoods in Birmingham.
+                    </p>
+                </div>
+
+                <!-- Metric Card 2 -->
+                <div class="formal-card p-5 rounded-xl space-y-3">
+                    <div class="flex items-center justify-between border-b border-stone-800 pb-2">
+                        <span class="text-xs font-mono font-bold text-rose-400">RSEI Score Comparison vs Medians</span>
+                    </div>
+                    <div class="rounded-lg overflow-hidden border border-stone-800 bg-stone-950 aspect-[16/10]">
+                        <img src="RESI_score_comparison.png" alt="RSEI Score Comparison Graph" class="metric-image">
+                    </div>
+                    <p class="text-xs text-stone-400 font-mono">
+                        Facility risk score bars reach nearly 1 Million in 2020/2021 while county, state, and national medians sit below 50.
+                    </p>
+                </div>
+
+            </div>
+
+            <div class="formal-card p-5 rounded-xl border border-amber-900/40 space-y-2">
+                <h4 class="font-display font-bold text-sm text-amber-300 flex items-center gap-2">
+                    <i class="fa-solid fa-circle-exclamation text-amber-500"></i>
+                    The Systemic Disparity
+                </h4>
+                <p class="text-xs sm:text-sm text-stone-300 leading-relaxed">
+                    These metrics prove environmental harm is synonymous with an alarming increase in toxic exposure. When facility hazard scores surpass 1,000,000 while state and national medians remain under 50, it demonstrates how major industries are sanctioned to shorten and steal lives in Black and low-income neighborhoods.
+                </p>
+            </div>
+
+        </section>
+
+        <!-- SECTION 3: EMBEDDED UNBROKEN INTERACTIVE LEAFLET MAP -->
+        <section id="map-section" class="scroll-mt-24 space-y-6">
+            
+            <div class="border-l-4 border-amber-600 pl-4 py-1">
+                <span class="text-xs font-bold uppercase font-display tracking-widest text-amber-500">Section 03 // Spatial Proof</span>
+                <h2 class="text-2xl sm:text-4xl font-extrabold font-display text-amber-100 mt-0.5">
+                    Interactive Map: North Birmingham & Superfund Site
+                </h2>
+                <p class="text-xs text-stone-400 font-mono mt-0.5">Pan, zoom, and click controls to view redlining overlays and toxic release sites</p>
+            </div>
+
+            <div class="formal-card p-5 rounded-2xl space-y-4">
+                
+                <!-- Map Layer Controls -->
+                <div class="flex flex-wrap items-center justify-between gap-3">
+                    <div class="flex flex-wrap gap-2 map-action-controls">
+                        <button onclick="focusMapLocation('home')" class="px-3 py-1.5 bg-amber-900/40 hover:bg-amber-900/70 border border-amber-700/60 rounded-md text-xs font-display font-bold text-amber-200 transition">
+                            📍 Grandma Irma's Home
+                        </button>
+                        <button onclick="focusMapLocation('superfund')" class="px-3 py-1.5 bg-rose-950/40 hover:bg-rose-900/70 border border-rose-800/60 rounded-md text-xs font-display font-bold text-rose-200 transition">
+                            ⚠️ 35th Ave Superfund Zone
+                        </button>
+                        <button onclick="focusMapLocation('redline')" class="px-3 py-1.5 bg-amber-950/40 hover:bg-amber-900/70 border border-amber-800/60 rounded-md text-xs font-display font-bold text-amber-300 transition">
+                            🛑 1930s Redlined Zone D
+                        </button>
+                    </div>
+                    <span class="text-[11px] font-mono text-stone-400">Centering: 33.5540, -86.8080</span>
+                </div>
+
+                <!-- Leaflet Interactive Map Container -->
+                <div id="leaflet-map" class="border border-stone-800 shadow-2xl"></div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-sm map-info-grid">
+                    <div class="p-4 rounded-lg map-info-card">
+                        <span class="font-bold block mb-1 map-info-title">1930s Grade D Redlining</span>
+                        Classified Black neighborhoods as "Hazardous", restricting mortgages and laying industrial zoning foundations.
+                    </div>
+                    <div class="p-4 rounded-lg map-info-card">
+                        <span class="font-bold block mb-1 map-info-title">35th Ave Superfund</span>
+                        Designated by EPA after soil testing showed dangerous benzo(a)pyrene, arsenic, and lead deposits.
+                    </div>
+                    <div class="p-4 rounded-lg map-info-card">
+                        <span class="font-bold block mb-1 map-info-title">2637 39th Ave North</span>
+                        Located directly in the overlap zone between rail freight lines, coke emissions, and Superfund soil.
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+        <p class="note">Map note: Pins and shaded shapes are approximate visual context, not verified property, redlining, or Superfund boundaries. Use official records before drawing conclusions about specific locations.</p>
+
+        <!-- SECTION 4: SOLUTIONS & REVERSING THE PROBLEM -->
+        <section id="solutions-section" class="scroll-mt-24 space-y-6">
+            
+            <div class="border-l-4 border-emerald-600 pl-4 py-1">
+                <span class="text-xs font-bold uppercase font-display tracking-widest text-emerald-500">Section 04 // Moving Forward</span>
+                <h2 class="text-2xl sm:text-4xl font-extrabold font-display text-amber-100 mt-0.5">
+                    What We Can Do Next
+                </h2>
+                <p class="font-handwriting text-2xl text-amber-300 font-medium mt-0.5">
+                    I want her story to help people find answers and make their communities safer.
+                </p>
+            </div>
+
+            <div class="formal-card p-6 sm:p-10 rounded-2xl space-y-8">
+                
+                <p class="text-base sm:text-lg text-stone-200 leading-relaxed font-normal">
+                    I want people to leave this page knowing something they did not know before—and with a few practical ways to get involved. My grandma’s story is personal to me, but the need for healthier neighborhoods affects so many families.
+                </p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="solution-card space-y-3"><span class="step">01</span><h4 class="text-xl font-bold">Give residents a real voice</h4><p>Tell people about proposed permits, pollution risks, and zoning changes before decisions are made. Use clear notices, accessible meetings, and time for public comments.</p></div>
+                    <div class="solution-card space-y-3"><span class="step">02</span><h4 class="text-xl font-bold">Make neighborhood health a priority</h4><p>Support independent air and soil testing, access to health screenings, and public updates that explain what the results mean.</p></div>
+                    <div class="solution-card space-y-3"><span class="step">03</span><h4 class="text-xl font-bold">Support the people doing the work</h4><p>Learn from local organizers and community science projects. Birmingham groups like GASP help residents understand air quality and advocate for change.</p><a href="https://gaspgroup.org/" target="_blank" rel="noopener noreferrer">Explore GASP →</a></div>
+                    <div class="solution-card space-y-3"><span class="step">04</span><h4 class="text-xl font-bold">Hold industries and officials accountable</h4><p>Ask for transparent pollution reporting, enforceable protections, funded cleanup plans, and regular follow-ups—not just promises.</p></div>
+                </div>
+                <div class="space-y-3">
+                    <h3 class="font-display text-xl sm:text-2xl font-bold text-amber-200">Helpful links to keep learning</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        <a class="resource-link" href="https://gaspgroup.org/" target="_blank" rel="noopener noreferrer">GASP — Birmingham air quality advocacy ↗</a>
+                        <a class="resource-link" href="https://www.epa.gov/toxics-release-inventory-tri-program" target="_blank" rel="noopener noreferrer">EPA — Toxics Release Inventory ↗</a>
+                        <a class="resource-link" href="https://www.atsdr.cdc.gov/" target="_blank" rel="noopener noreferrer">ATSDR — Environmental health information ↗</a>
+                        <a class="resource-link" href="https://www.epa.gov/environmentaljustice" target="_blank" rel="noopener noreferrer">EPA — Environmental justice resources ↗</a>
+                    </div>
+                </div>
+                <p class="note">Environmental data can help us identify concerns and ask better questions. A map or screening score alone cannot prove what caused one person's illness. My family's experience is part of why I believe those questions deserve serious attention.</p>
+
+                <div class="p-6 bg-amber-950/40 border border-amber-800/50 rounded-xl text-center space-y-2">
+                    <p class="font-handwriting text-2xl text-amber-200">
+                        "I'm determined and excited for this project. I want to make a difference for good."
+                    </p>
+                    <p class="text-xs font-mono text-stone-400">
+                        — Angel Sheena Cameron Ash
+                    </p>
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-stone-950 border-t border-amber-900/40 py-12 px-4 text-center mt-16">
+        <div class="max-w-4xl mx-auto space-y-3">
+            <h3 class="text-xl font-bold font-display text-amber-200">Gallery Walk Presentation</h3>
+            <p class="font-handwriting text-2xl text-stone-300">
+                For Grandma Irma, with love — Angel Sheena Cameron Ash
+            </p>
+            <p class="text-xs font-mono text-stone-500">
+                Dedicated to Grandma Irma (Irma Jean Allen Cameron Patton) • 2637 39th Avenue North, Birmingham, AL
+            </p>
+            <div class="pt-2">
+                <button onclick="openQRModal()" class="inline-flex items-center gap-2 bg-amber-600 hover:bg-amber-500 text-stone-950 font-display font-bold px-4 py-2 rounded-lg text-xs uppercase tracking-wider transition">
+                    <i class="fa-solid fa-qrcode"></i> View Mobile QR Code
+                </button>
+            </div>
+        </div>
+    </footer>
+
+    <!-- QR CODE CLASSROOM MODAL -->
+    <div id="qr-modal" class="fixed inset-0 bg-stone-950/80 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4">
+        <div class="formal-card p-6 sm:p-8 rounded-2xl max-w-sm w-full text-center space-y-6 relative border border-amber-800/60">
+            <button onclick="closeQRModal()" class="absolute top-4 right-4 text-stone-400 hover:text-amber-200 font-bold">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+
+            <div>
+                <span class="text-xs font-mono uppercase tracking-widest text-amber-400 block mb-1">Classroom Link</span>
+                <h3 class="text-lg font-bold font-display text-amber-100">Gallery Walk Presentation</h3>
+                <p class="text-xs text-stone-400 mt-1">The QR code works after you publish this page online.</p>
+            </div>
+
+            <div class="bg-white p-4 rounded-xl inline-flex justify-center min-h-[190px] min-w-[190px]">
+                <div id="real-qrcode" class="text-sm text-slate-700">Publish this page to create a QR code.</div>
+            </div>
+
+            <p class="text-xs font-mono text-amber-300">By Angel Sheena Cameron Ash</p>
+
+            <button onclick="closeQRModal()" class="w-full bg-amber-600 hover:bg-amber-500 text-stone-950 font-display font-bold py-2 rounded-lg text-xs uppercase tracking-wider transition">
+                Close Modal
+            </button>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        let map;
+
+        function openQRModal() {
+            document.getElementById('qr-modal').classList.remove('hidden');
+            const target = document.getElementById('real-qrcode');
+            if (location.protocol.startsWith('http') && window.QRCode && !target.dataset.ready) {
+                target.textContent = '';
+                new QRCode(target, {text:location.href, width:160, height:160, colorDark:'#1554a1', colorLight:'#ffffff'});
+                target.dataset.ready='yes';
+            }
+        }
+        function closeQRModal() {
+            document.getElementById('qr-modal').classList.add('hidden');
+        }
+
+        // Initialize Leaflet Map
+        document.addEventListener("DOMContentLoaded", function() {
+            map = L.map('leaflet-map').setView([33.5540, -86.8080], 14);
+
+            // Free CartoDB Dark Matter Basemap Tiles (Zero API key needed)
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 19,
+                subdomains: 'abc',
+                attribution: '© OpenStreetMap contributors'
+            }).addTo(map);
+
+            // Marker 1: Grandma Irma's House
+            const grandmaMarker = L.marker([33.5555, -86.8048]).addTo(map);
+            grandmaMarker.bindPopup(`
+                <div style="font-family: sans-serif; padding: 2px;">
+                    <h4 style="color: #f59e0b; margin-bottom: 4px; font-weight: bold;">🏡 Grandma Irma's Home</h4>
+                    <p style="font-size: 0.8rem; margin: 0; color: #f7f2ea;">
+                        <strong>2637 39th Avenue North</strong><br>
+                        Near rail infrastructure and other environmental concerns discussed in this project.
+                    </p>
+                </div>
+            `).openPopup();
+
+            // Marker 2: Industrial Coke Plant
+            const cokeMarker = L.marker([33.5620, -86.7990]).addTo(map);
+            cokeMarker.bindPopup(`
+                <div style="font-family: sans-serif; padding: 2px;">
+                    <h4 style="color: #ef4444; margin-bottom: 4px; font-weight: bold;">🏭 Industrial Coke Plant & Rail Corridor</h4>
+                    <p style="font-size: 0.8rem; margin: 0; color: #f7f2ea;">
+                        Approximate industrial/rail area shown for geographic context; not a verified facility boundary.
+                    </p>
+                </div>
+            `);
+
+            // Redline Polygon Layer
+            const redlinePolygon = L.polygon([
+                [33.5650, -86.8200],
+                [33.5650, -86.7950],
+                [33.5480, -86.7950],
+                [33.5480, -86.8200]
+            ], {
+                color: '#d97706',
+                fillColor: '#b45309',
+                fillOpacity: 0.15,
+                weight: 2,
+                dashArray: '5, 5'
+            }).addTo(map);
+
+            // Superfund Circle Layer
+            const superfundCircle = L.circle([33.5520, -86.8100], {
+                color: '#be123c',
+                fillColor: '#f43f5e',
+                fillOpacity: 0.25,
+                radius: 950
+            }).addTo(map);
+            superfundCircle.bindPopup("<b style='color:#f43f5e;'>Illustrative area only — not an official site boundary</b>");
+        });
+
+        // Focus Map Function
+        function focusMapLocation(type) {
+            if(!map) return;
+            if(type === 'home') {
+                map.flyTo([33.5555, -86.8048], 16);
+            } else if(type === 'superfund') {
+                map.flyTo([33.5520, -86.8100], 14);
+            } else if(type === 'redline') {
+                map.flyTo([33.5565, -86.8075], 14);
+            }
+        }
+    </script>
+</body>
+</html>
