@@ -536,7 +536,128 @@
 
     </main>
 
+
     
+<!-- SECTION 5: SOFT BLUE GRADIENT STYLING -->
+<style>
+/* Only affects Section 05 */
+#action-plan-section {
+    color: #243d56;
+}
+
+/* Main section heading */
+#action-plan-section > .border-l-4 {
+    border-color: #6495c1 !important;
+    padding-left: 1.25rem;
+}
+
+#action-plan-section > .border-l-4 span {
+    color: #91bce1 !important;
+}
+
+#action-plan-section > .border-l-4 h2 {
+    color: #e6f2ff !important;
+}
+
+#action-plan-section > .border-l-4 p {
+    color: #d1e3f3 !important;
+}
+
+/* Main container: soft blue gradient */
+#action-plan-section > .formal-card {
+    background: linear-gradient(
+        145deg,
+        #f7fbff 0%,
+        #e8f1f9 50%,
+        #dceaf6 100%
+    ) !important;
+    border: 1px solid #bfd3e5 !important;
+    box-shadow: 0 12px 35px rgba(18, 50, 84, 0.12);
+}
+
+/* Solution cards and action-plan box */
+#action-plan-section .formal-card > .bg-blue-950\/30,
+#action-plan-section .formal-card > .bg-blue-900\/30 {
+    background: linear-gradient(
+        135deg,
+        #ffffff 0%,
+        #edf5fc 52%,
+        #dceaf6 100%
+    ) !important;
+    border: 1px solid #b9d0e5 !important;
+    border-left: 4px solid #709dc5 !important;
+    box-shadow: 0 5px 16px rgba(43, 83, 122, 0.07);
+}
+
+/* Smaller data cards */
+#action-plan-section .grid .bg-blue-950\/30 {
+    background: linear-gradient(
+        150deg,
+        #f8fbff 0%,
+        #dcebf7 100%
+    ) !important;
+    border: 1px solid #bed2e5 !important;
+    box-shadow: 0 3px 10px rgba(30, 70, 110, 0.06);
+}
+
+/* Section headings and card titles */
+#action-plan-section .formal-card h3 {
+    color: #244f78 !important;
+}
+
+#action-plan-section .formal-card h4 {
+    color: #2e608c !important;
+}
+
+/* Step numbers */
+#action-plan-section .formal-card span {
+    color: #477eaa !important;
+}
+
+/* Paragraphs and lists: readable navy */
+#action-plan-section .formal-card p,
+#action-plan-section .formal-card li,
+#action-plan-section .formal-card .text-stone-200,
+#action-plan-section .formal-card .text-stone-300,
+#action-plan-section .formal-card .text-stone-400 {
+    color: #344c63 !important;
+}
+
+/* Important phrases */
+#action-plan-section .formal-card strong {
+    color: #245781 !important;
+}
+
+/* Links: distinct but not overly bright */
+#action-plan-section .formal-card a {
+    color: #245f97 !important;
+    font-weight: 700;
+    text-decoration-color: #88b1d2;
+    text-underline-offset: 4px;
+    transition: color 0.2s ease;
+}
+
+#action-plan-section .formal-card a:hover {
+    color: #123e66 !important;
+    text-decoration-color: #123e66;
+}
+
+/* Softer section dividers */
+#action-plan-section .formal-card .border-t {
+    border-color: #b9cfe2 !important;
+}
+
+/* Subtle hover effect on solution cards */
+#action-plan-section .formal-card > .bg-blue-950\/30 {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+#action-plan-section .formal-card > .bg-blue-950\/30:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 9px 22px rgba(43, 83, 122, 0.12);
+}
+</style>
+
 <!-- SECTION 5: FROM AWARENESS TO ACTION -->
 <section id="action-plan-section" class="scroll-mt-24 space-y-6">
 
