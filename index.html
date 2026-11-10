@@ -40,7 +40,115 @@
     <!-- Leaflet.js Interactive Map CSS & JS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+ .deeper-solutions { background:#f9fbfe; border:1px solid #cbd9e8; border-radius:18px; padding:clamp(20px,4vw,38px); box-shadow:0 5px 18px rgba(24,64,121,.06); }
+        .deep-lead { color:#3e566e; max-width:860px; line-height:1.75; }
+        .deep-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:17px; margin-top:24px; }
+        .deep-card { background:#eaf1f8; border:1px solid #cad9e9; border-left:5px solid #3571ad; border-radius:12px; padding:22px; }
+        .deep-card h3 { font:700 1.22rem Georgia,serif; color:#1f4f80; margin:0 0 12px; }
+        .deep-card p, .deep-card li { color:#354c63; font-size:.94rem; line-height:1.7; }
+        .deep-card p { margin:0 0 11px; }
+        .deep-card ul { margin:8px 0 0; padding-left:20px; }
+        .deep-card li { margin:6px 0; }
+        .deep-card strong { color:#204f80; }
+        .deep-card a, .deep-resources a { color:#174f8d; text-decoration:underline; text-underline-offset:3px; font-weight:700; }
+        .deep-kicker { display:inline-block; color:#2b679f; font-size:.73rem; font-weight:800; text-transform:uppercase; letter-spacing:.06em; margin-bottom:9px; }
+        .deep-roadmap { background:#dceaf7; border-radius:12px; padding:23px; margin-top:20px; border:1px solid #bdd2e6; }
+        .deep-roadmap h3, .deep-resources h3 { font:700 1.35rem Georgia,serif; color:#1d4e80; margin:0 0 12px; }
+        .deep-roadmap ol { padding-left:22px; margin:0; }
+        .deep-roadmap li { padding:5px 0; color:#334f69; line-height:1.65; }
+        .deep-resources { margin-top:22px; border-top:1px solid #cad9e9; padding-top:20px; }
+        .deep-resources ul { padding-left:20px; color:#354c63; line-height:1.75; }
+        .deep-resources li { margin:8px 0; }
+        .deep-caveat { margin-top:18px; border-left:4px solid #6c89a4; background:#eff4f9; color:#40566b; padding:15px 18px; border-radius:5px; font-size:.9rem; line-height:1.7; }
+        @media(max-width:700px) { .deep-grid { grid-template-columns:1fr; } .deep-card { padding:18px; } }
 
+HTML — paste before </main>
+
+<!-- SECTION 5: IN-DEPTH SOLUTIONS / ACTION PLAN -->
+        <section id="deeper-solutions" class="scroll-mt-24 space-y-6" aria-labelledby="deeper-solutions-title">
+            <div class="border-l-4 border-amber-600 pl-4 py-1">
+                <span class="text-xs font-bold uppercase font-display tracking-widest text-amber-500">Section 05 // From Awareness to Action</span>
+                <h2 id="deeper-solutions-title" class="text-2xl sm:text-4xl font-extrabold font-display text-amber-100 mt-1">What would real change look like?</h2>
+            </div>
+
+            <div class="deeper-solutions">
+                <p class="deep-lead">
+                    When I think about my grandma's neighborhood, I think about how many decisions were made long before families had a real chance to question them. I don't think the answer is to tell people to simply move away. People have homes, histories, churches, neighbors, and roots. A better answer is to make the places they already call home safer—and to give them a meaningful voice in what happens next.
+                </p>
+
+                <div class="deep-grid">
+                    <article class="deep-card">
+                        <span class="deep-kicker">Solution 01 · Information</span>
+                        <h3>Make pollution information public and understandable</h3>
+                        <p><strong>The problem:</strong> Pollution data can be difficult to find, full of technical language, or disconnected from what residents experience.</p>
+                        <p><strong>What should happen:</strong> Agencies and companies should share monitoring results in plain language, explain what was tested, identify uncertainties, and provide translated or accessible versions when needed.</p>
+                        <p><strong>Who can act:</strong> Environmental agencies, local health departments, researchers, and community organizations.</p>
+                        <p><strong>How to measure progress:</strong> Regular public reports, easy-to-find test results, and community meetings where residents can ask questions and receive answers.</p>
+                        <p><a href="https://www.epa.gov/toxics-release-inventory-tri-program" target="_blank" rel="noopener noreferrer">Explore EPA's Toxics Release Inventory ↗</a></p>
+                    </article>
+
+                    <article class="deep-card">
+                        <span class="deep-kicker">Solution 02 · Prevention</span>
+                        <h3>Protect neighborhoods before new harm happens</h3>
+                        <p><strong>The problem:</strong> One facility or road project may be considered on its own, even when residents already live near multiple pollution sources.</p>
+                        <p><strong>What should happen:</strong> Before approving industrial expansions or land-use changes, decision-makers should consider existing environmental burdens, give advance notice, and invite meaningful public input.</p>
+                        <p><strong>Who can act:</strong> Planning and zoning officials, permitting agencies, elected leaders, and residents.</p>
+                        <p><strong>How to measure progress:</strong> Better public notice, documented responses to residents' concerns, and decisions that explain how health and neighborhood conditions were considered.</p>
+                        <p><a href="https://www.epa.gov/environmentaljustice" target="_blank" rel="noopener noreferrer">Learn about environmental justice ↗</a></p>
+                    </article>
+
+                    <article class="deep-card">
+                        <span class="deep-kicker">Solution 03 · Health</span>
+                        <h3>Invest in testing, health support, and cleanup</h3>
+                        <p><strong>The problem:</strong> Families may have concerns about soil, air, or water without affordable ways to test conditions or understand possible health implications.</p>
+                        <p><strong>What should happen:</strong> Support independent environmental sampling where warranted, communicate results clearly, provide pathways to appropriate health services, and fund cleanup when contamination is confirmed.</p>
+                        <p><strong>Who can act:</strong> Public health agencies, environmental regulators, healthcare providers, and responsible parties.</p>
+                        <p><strong>How to measure progress:</strong> Published testing and cleanup milestones, follow-up sampling, and clear information about services available to residents.</p>
+                        <p><a href="https://www.atsdr.cdc.gov/" target="_blank" rel="noopener noreferrer">Find environmental health information through ATSDR ↗</a></p>
+                    </article>
+
+                    <article class="deep-card">
+                        <span class="deep-kicker">Solution 04 · Community power</span>
+                        <h3>Let residents help shape the solutions</h3>
+                        <p><strong>The problem:</strong> Communities are sometimes asked to react to decisions after the important choices have already been made.</p>
+                        <p><strong>What should happen:</strong> Support neighborhood-led monitoring, resident advisory groups, public comment workshops, and partnerships with local advocates. Participation should not require specialized knowledge or money.</p>
+                        <p><strong>Who can act:</strong> Residents, schools, community groups, local government, and universities.</p>
+                        <p><strong>How to measure progress:</strong> Residents represented in planning, meetings held at accessible times, and visible changes made in response to community feedback.</p>
+                        <p><a href="https://gaspgroup.org/" target="_blank" rel="noopener noreferrer">Learn about Birmingham's GASP ↗</a></p>
+                    </article>
+                </div>
+
+                <div class="deep-roadmap">
+                    <h3>What can someone actually do after viewing this project?</h3>
+                    <ol>
+                        <li><strong>Start with one question:</strong> What facilities, roads, or cleanup sites are near my neighborhood, and where can I find reliable information about them?</li>
+                        <li><strong>Look at public sources:</strong> Use EPA resources and local agency records, remembering that screening tools identify concerns rather than proving individual harm.</li>
+                        <li><strong>Connect with people already doing the work:</strong> Find a local community group, attend a public meeting, or ask a local official how residents can comment on proposed changes.</li>
+                        <li><strong>Ask for a specific follow-up:</strong> Request understandable test results, clearer public notices, a meeting with decision-makers, or a timeline for cleanup and reporting.</li>
+                        <li><strong>Keep track of the response:</strong> Record what was promised, who is responsible, and whether progress is publicly reported.</li>
+                    </ol>
+                </div>
+
+                <div class="deep-resources">
+                    <h3>Helpful places to begin</h3>
+                    <ul>
+                        <li><a href="https://gaspgroup.org/" target="_blank" rel="noopener noreferrer">GASP</a> — Birmingham-area air quality advocacy and community education.</li>
+                        <li><a href="https://www.epa.gov/toxics-release-inventory-tri-program" target="_blank" rel="noopener noreferrer">EPA Toxics Release Inventory</a> — information on certain chemicals reported by covered facilities.</li>
+                        <li><a href="https://www.epa.gov/superfund" target="_blank" rel="noopener noreferrer">EPA Superfund</a> — information on contaminated sites, investigations, and cleanup.</li>
+                        <li><a href="https://www.atsdr.cdc.gov/" target="_blank" rel="noopener noreferrer">ATSDR</a> — information about environmental exposures and public health.</li>
+                    </ul>
+                </div>
+
+                <p class="deep-caveat">
+                    <strong>Why the distinction matters:</strong> Redlining, industrial land use, pollution reporting, and health outcomes are connected topics worth investigating, but they are not interchangeable forms of evidence. A risk score, an approximate map overlay, or proximity to a facility cannot establish what caused my grandmother's lymphoma. This project shares my family's experience while asking for better information, stronger protections, and accountability for communities like hers.
+                </p>
+
+                <p class="deep-lead" style="margin-top:20px;font-weight:700;color:#245786;">
+                    I want Grandma Irma to be remembered for the life she lived. And I want her story to encourage people to care about the lives being lived in these neighborhoods right now.
+                </p>
+            </div>
+        </section>
+    
     <style>
         body {
             font-family: "Trebuchet MS", "Segoe UI", sans-serif;
